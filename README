@@ -13,6 +13,9 @@ How to test it:
 Currently it simply uses the hamster-cli tool so this is very basic.
 DBus support will be helpful.
 
+Tested platforms:
+- Fedora 15 (gnome-shell 3.0.2)
+
 License: See the COPYING file.
 
 History:
