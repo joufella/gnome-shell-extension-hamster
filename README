@@ -19,10 +19,12 @@ History:
 - Version 11.7.2 - Initial version, basic, uses the hamster-cli tool.
 
 Backlog:
+- More i18n
 - Global keyboard shortcut to activate
 - DBus interface (as in the Presentation Mode extension)
-- Display current task info
+- Display current task info next to icon
 - Auto-completion in the text entry field
+- Some preferences
 
 Cheers
 Jerome Oufella
