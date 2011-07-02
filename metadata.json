@@ -1,0 +1,7 @@
+{
+"shell-version": ["3.0.2"],
+"uuid": "hamster-menu@oufella.com",
+"name": "Hamster Menu",
+"url": "http://www.oufella.com/",
+"description": "Gnome-Shell menu for the hamster time tracker"
+}
