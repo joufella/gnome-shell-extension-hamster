@@ -1,19 +1,28 @@
 This is a gnome-shell extension to make your life with the Hamster Time
 Tracker easier.
 
-How to test it
+How to test it:
 
-0. Make sure hamster is installed.
-1. mkdir -p ~/.local/share/gnome-shell/extensions
-2. cd ~/.local/share/gnome-shell/extensions
-3. git clone git://github.com/joufella/gnome-shell-extension-hamster.git \
+- Make sure hamster is installed.
+- mkdir -p ~/.local/share/gnome-shell/extensions
+- cd ~/.local/share/gnome-shell/extensions
+- git clone git://github.com/joufella/gnome-shell-extension-hamster.git \
    hamster@oufella.com
-4. reload gnome-shell (Alt-F2 r)
+- reload gnome-shell (Alt-F2 r)
 
 Currently it simply uses the hamster-cli tool so this is very basic.
 DBus support will be helpful.
 
-License: GPLv2
+License: See the COPYING file.
+
+History:
+- Version 11.7.2 - Initial version, basic, uses the hamster-cli tool.
+
+Backlog:
+- Global keyboard shortcut to activate
+- DBus interface (as in the Presentation Mode extension)
+- Display current task info
+- Auto-completion in the text entry field
 
 Cheers
 Jerome Oufella

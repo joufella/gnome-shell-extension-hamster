@@ -1,14 +1,9 @@
 /* 
- * Hamster menu for Gnome Shell
+ * Simple Hamster extension for gnome-shell
  * (c) 2011 Jerome Oufella <jerome@oufella.com>
+ * This project is released under the GNU GPL License.
+ * See COPYING for details.
  *
- * History:
- * Version 11.7.2 - Basic, uses the hamster-cli tool.
- *
- * Backlog:
- * - Global keyboard shortcut to activate
- * - DBus interface
- * - Task auto-completion
  */
 const Lang = imports.lang;
 const St = imports.gi.St;
