@@ -13,5 +13,7 @@ How to test it
 Currently it simply uses the hamster-cli tool so this is very basic.
 DBus support will be helpful.
 
+License: GPLv2
+
 Cheers
 Jerome Oufella
