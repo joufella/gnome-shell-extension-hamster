@@ -3,10 +3,10 @@
  * (c) 2011 Jerome Oufella <jerome@oufella.com>
  *
  * History:
- * Version 11.7.1 - Uses the hamster-cli tool.
+ * Version 11.7.2 - Basic, uses the hamster-cli tool.
  *
  * Backlog:
- * - Global keyboard shortcut
+ * - Global keyboard shortcut to activate
  * - DBus interface
  * - Task auto-completion
  */
