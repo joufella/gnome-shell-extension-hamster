@@ -1,15 +1,16 @@
-This is a gnome-shell extension to make your life with the Hamster Time Tracker easier.
+This is a gnome-shell extension to make your life with the Hamster Time
+Tracker easier.
 
 How to test it
 
 0. Make sure hamster is installed.
 1. mkdir -p ~/.local/share/gnome-shell/extensions
 2. cd ~/.local/share/gnome-shell/extensions
-3. git clone git://github.com/joufella/gnome-shell-extension-hamster.git hamster@oufella.com
+3. git clone git://github.com/joufella/gnome-shell-extension-hamster.git \
+   hamster@oufella.com
 4. reload gnome-shell (Alt-F2 r)
 
 Currently it simply uses the hamster-cli tool so this is very basic.
 DBus support will be helpful.
 
-Cheers
-Jerome Oufella
+Cheers Jerome Oufella
