@@ -15,6 +15,12 @@ const Util = imports.misc.util;
 const Gettext = imports.gettext;
 const _ = Gettext.gettext;
 
+/* We use keybindings provided by default in the metacity GConf tree, and which
+ * are supported by default.
+ * Most probably not the smartest choice, time will tell.
+ */
+const _hamsterKeyBinding = 'run_command_12';
+
 function HamsterPopupMenuEntry() {
 	this._init.apply(this, arguments);
 }
@@ -27,6 +33,12 @@ HamsterPopupMenuEntry.prototype = {
 		this._textEntry = new St.Entry(entryParams);
 		this._textEntry.clutter_text.connect('activate', Lang.bind(this, this._onEntryActivated));
 		this.addActor(this._textEntry);
+
+ 		/* Install global keybinding to log something */
+		let shellwm = global.window_manager;
+		shellwm.takeover_keybinding(_hamsterKeyBinding);
+		shellwm.connect('keybinding::' + _hamsterKeyBinding,
+			Lang.bind(this, this._onGlobalKeyBinding));
 	},
 
 	_onEntryActivated: function() {
@@ -40,6 +52,11 @@ HamsterPopupMenuEntry.prototype = {
 		this.emit('activate');
 		this._textEntry.set_text('');
 		this.close(true);
+	},
+
+	_onGlobalKeyBinding: function() {
+		global.log('** _onGlobalKeyBinding() triggered');
+		/* TODO: do something when global keybinding is pressed. */
 	}
 };
 
@@ -108,6 +125,7 @@ function main(extensionMeta) {
 	Gettext.bindtextdomain("hamster_button", userExtensionLocalePath);
 	Gettext.textdomain("hamster_button");
 
+	/* Create our button */
 	new HamsterButton();
 }
 //vim:ts=4
