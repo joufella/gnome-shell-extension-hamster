@@ -33,12 +33,12 @@ See the COPYING file.
 
 History
 =======
+- Version 11.7.4 - Display activity, global keybinding, big cleanup.
 - Version 11.7.2 - Initial version, basic, uses the hamster-cli tool.
 
 Features Backlog
 ================
 - More i18n
-- Global keyboard shortcut to activate
 - DBus interface (as in the Presentation Mode extension)
 - Display current task info next to icon
 - Auto-completion in the text entry field
