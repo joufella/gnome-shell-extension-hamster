@@ -15,6 +15,9 @@ const Util = imports.misc.util;
 const Gettext = imports.gettext;
 const _ = Gettext.gettext;
 
+/* What appears next to the hamster icon when no activity is tracked */
+const _idleText = '-';
+
 /* We use keybindings provided by default in the metacity GConf tree, and which
  * are supported by default.
  * Most probably not the smartest choice, time will tell.
@@ -35,32 +38,14 @@ HamsterPopupMenuEntry.prototype = {
 	_init: function(itemParams, entryParams) {
 		PopupMenu.PopupBaseMenuItem.prototype._init.call(this, itemParams);
 		this._textEntry = new St.Entry(entryParams);
-		this._textEntry.clutter_text.connect('activate', Lang.bind(this, this._onEntryActivated));
+		this._textEntry.clutter_text.connect('activate',
+			Lang.bind(this, this._onEntryActivated));
 		this.addActor(this._textEntry);
-
- 		/* Install global keybinding to log something */
-		let shellwm = global.window_manager;
-		shellwm.takeover_keybinding(_hamsterKeyBinding);
-		shellwm.connect('keybinding::' + _hamsterKeyBinding,
-			Lang.bind(this, this._onGlobalKeyBinding));
 	},
 
 	_onEntryActivated: function() {
-		let text = this._textEntry.get_text();
-		let cmdline = 'hamster-cli start "' + text + '"';
-		try {
-			Util.trySpawnCommandLine(cmdline);
-		} catch (e) {
-			global.log('_onEntryActivated: got exception: ' + e);
-		}
 		this.emit('activate');
 		this._textEntry.set_text('');
-		this.close(true);
-	},
-
-	_onGlobalKeyBinding: function() {
-		global.log('** _onGlobalKeyBinding() triggered');
-		/* TODO: do something when global keybinding is pressed. */
 	}
 };
 
@@ -78,16 +63,25 @@ HamsterButton.prototype = {
 
 	_init: function() {
 		PanelMenu.Button.prototype._init.call(this, 0.0);
+		let box = new St.BoxLayout({ name: 'hamsterMenu' });
+		this.actor.set_child(box);
 
-		/* Create panel item */
-		let logo = new St.Icon({
+		/* Create panel item (hamster icon + current activity name) */
+		this._hamsterIcon = new St.Icon({
+			icon_name: 'hamster-applet',
 			icon_type: St.IconType.FULLCOLOR,
-			icon_size: Main.panel.button.height - 4,
-			icon_name: 'hamster-applet'
+			style_class: 'popup-menu-icon'
 		});
-		let logoBox = new St.BoxLayout();
-		logoBox.add_actor(logo);
-		this.actor.set_child(logoBox);
+
+		let idleText = ' ' + _idleText;
+		this._activityLabel = new St.Label({ text: idleText });
+
+		this._iconBox = new St.Bin();
+		this._iconBox.set_child(this._hamsterIcon);
+
+		box.add(this._iconBox, { y_align: St.Align.MIDDLE, y_fill: false });
+		box.add(this._activityLabel, { y_align: St.Align.MIDDLE,
+			y_fill: false });
 
 		/* Create all items in the dropdown menu: */
 		let item;
@@ -103,14 +97,7 @@ HamsterButton.prototype = {
 
 		/* To stop tracking the current activity */
 		item = new PopupMenu.PopupMenuItem(_("Stop tracking"));
-		item.connect('activate', function() {
-			let cmdline = 'hamster-cli stop';
-			try {
-				Util.trySpawnCommandLine(cmdline);
-			} catch (e) {
-				global.log('StopTracking got exception: ' + e);
-			}
-		});
+		item.connect('activate', Lang.bind(this, this._onStopTracking));
 		this.menu.addMenuItem(item);
 
 		/* The activity item has a text entry field to quickly log something */
@@ -120,11 +107,45 @@ HamsterButton.prototype = {
 			track_hover: false,
 			hint_text: _("Enter activity...")
 		});
+		item.connect('activate', Lang.bind(this, this._onActivityEntry));
+		this._activityEntry = item;
 		this.menu.addMenuItem(item);
 
 		/* Integrate previously defined menu to panel */
 		Main.panel._rightBox.insert_actor(this.actor, 0);
 		Main.panel._menus.addMenu(this.menu);
+
+ 		/* Install global keybinding to log something */
+		let shellwm = global.window_manager;
+		shellwm.takeover_keybinding(_hamsterKeyBinding);
+		shellwm.connect('keybinding::' + _hamsterKeyBinding,
+			Lang.bind(this, this._onGlobalKeyBinding));
+	},
+
+	_onStopTracking: function() {
+		let cmdline = 'hamster-cli stop';
+		try {
+			Util.trySpawnCommandLine(cmdline);
+			this._activityLabel.set_text(' ' + _idleText);
+		} catch (e) {
+			global.log('StopTracking got exception: ' + e);
+		}
+	},
+
+	_onActivityEntry: function() {
+		let text = this._activityEntry._textEntry.get_text();
+		let cmdline = 'hamster-cli start "' + text + '"';
+		try {
+			Util.trySpawnCommandLine(cmdline);
+			this._activityLabel.set_text(' ' + text);
+		} catch (e) {
+			global.log('_onActivityEntry(): got exception: ' + e);
+		}
+	},
+
+	_onGlobalKeyBinding: function() {
+		global.log('** _onGlobalKeyBinding() triggered');
+		/* TODO: do something when global keybinding is pressed. */
 	}
 };
 
