@@ -1,6 +1,8 @@
 /* 
  * Simple Hamster extension for gnome-shell
- * (c) 2011 Jerome Oufella <jerome@oufella.com>
+ * Copyright (c) 2011 Jerome Oufella <jerome@oufella.com>
+ * Portions originate from the gnome-shell source code, Copyright (c) 
+ * its respectives authors.
  * This project is released under the GNU GPL License.
  * See COPYING for details.
  *
