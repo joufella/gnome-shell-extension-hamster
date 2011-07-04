@@ -21,6 +21,10 @@ const _ = Gettext.gettext;
  */
 const _hamsterKeyBinding = 'run_command_12';
 
+/*
+ * HamsterPopupMenuEntry defines the text entry field that appears in the
+ * Hamster popup menu to quickly enter a new activity. 
+ */
 function HamsterPopupMenuEntry() {
 	this._init.apply(this, arguments);
 }
@@ -60,6 +64,11 @@ HamsterPopupMenuEntry.prototype = {
 	}
 };
 
+
+/*
+ * HamsterButton defines the item that appears in the right section of the
+ * panel and contains the hamster popup menu.
+ */
 function HamsterButton() {
 	this._init();
 }
@@ -118,6 +127,7 @@ HamsterButton.prototype = {
 		Main.panel._menus.addMenu(this.menu);
 	}
 };
+
 
 function main(extensionMeta) {
 	/* Localization stuff */
