@@ -144,8 +144,8 @@ HamsterButton.prototype = {
 	},
 
 	_onGlobalKeyBinding: function() {
-		global.log('** _onGlobalKeyBinding() triggered');
-		/* TODO: do something when global keybinding is pressed. */
+		this.menu.toggle();
+		this._activityEntry._textEntry.grab_key_focus();
 	}
 };
 
