@@ -18,8 +18,10 @@ User settings
 GConf keys:
 - /apps/metacity/global_keybindings/run_command_12
   Currently used to store the keyboard shortcut that will trigger entering
-  an activity when the support for that feature is complete. Set it to
-  something like '<Alt>F3'.
+  an activity when the support for that feature is complete.
+  Example:
+  key='/apps/metacity/global_keybindings/run_command_12'
+  gconftool-2 -s --type string "$key" '<Alt>F3'
 
 Tested platforms
 ================
